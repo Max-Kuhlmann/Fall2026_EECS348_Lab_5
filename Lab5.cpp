@@ -25,6 +25,22 @@ vector<vector<int>> add(vector<vector<int>> matrix1, vector<vector<int>> matrix2
 	return finalMatrix;
 }
 
+vector<vector<int>> multiply(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
+	vector<vector<int>> finalMatrix;
+	for(int i = 0; i < matrix1.size(); i++) {
+		vector<int> tempRow;
+		for(int j = 0; j < matrix1[i].size(); j++) {
+			int tempVal = 0;
+			for(int k = 0; k < matrix1[i].size(); k++) {
+				tempVal += matrix1[i][j] * matrix2[j][i];
+			}
+			tempRow.push_back(tempVal);
+		}
+		finalMatrix.push_back(tempRow);
+	}
+	return finalMatrix;
+}
+
 int main() {
 	string filename;
 	string fileline;
@@ -81,6 +97,9 @@ int main() {
 		if(action == 1) {
 			cout << "A + B:" << endl;
 			printMatrix(add(matrix1, matrix2));
+		} else if(action == 2) {
+			cout << "A * B:" << endl;
+			printMatrix(multiply(matrix1, matrix2));
 		}
 		else {
 			looping = false;
