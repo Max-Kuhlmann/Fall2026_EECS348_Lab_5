@@ -13,6 +13,39 @@ void printMatrix(vector<vector<int>> matrix) {
         }
 }
 
+tuple<vector<vector<int>>, vector<vector<int>>, int> getMatrices(){
+	string filename;
+	string fileline;
+	cout << "Enter input filename: ";
+	cin >> filename;
+	ifstream myFile(filename);
+	int currRow = -1;
+	int size;
+	vector<vector<int>> matrix1;
+	vector<vector<int>> matrix2;
+	while(getline(myFile, fileline)) {
+		if(currRow == -1) {
+			size = stoi(fileline);
+		} else {
+			vector<int> tempRow;
+			string member;
+			stringstream filelineStream(fileline);
+			while(getline(filelineStream, member, ' ')) {
+			       tempRow.push_back(stoi(member));
+			}
+			if(currRow < size) {
+				matrix1.push_back(tempRow);
+			} else {
+				matrix2.push_back(tempRow);
+			}
+		}
+		currRow++;
+	}
+	myFile.close();
+	return {matrix1, matrix2, size};
+}
+	
+
 bool isValid(int size, int index1, int index2) {
 	if(index1 > 0 and index2 > 0 and index1 < size and index2 < size) {
 		return true;
@@ -91,34 +124,7 @@ vector<vector<int>> updateMatrix(vector<vector<int>> matrix, int newVal, int row
 }
 
 int main() {
-	string filename;
-	string fileline;
-	cout << "Enter input filename: ";
-	cin >> filename;
-	ifstream myFile(filename);
-	int currRow = -1;
-	int size;
-	vector<vector<int>> matrix1;
-	vector<vector<int>> matrix2;
-	while(getline(myFile, fileline)) {
-		if(currRow == -1) {
-			size = stoi(fileline);
-		} else {
-			vector<int> tempRow;
-			string member;
-			stringstream filelineStream(fileline);
-			while(getline(filelineStream, member, ' ')) {
-			       tempRow.push_back(stoi(member));
-			}
-			if(currRow < size) {
-				matrix1.push_back(tempRow);
-			} else {
-				matrix2.push_back(tempRow);
-			}
-		}
-		currRow++;
-	}
-	myFile.close();
+	auto [matrix1, matrix2, size] = getMatrices();
 	cout << "Matrix A:" << endl;
 	printMatrix(matrix1);
 	cout << "Matrix B:" << endl;
