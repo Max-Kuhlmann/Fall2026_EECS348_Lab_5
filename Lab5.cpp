@@ -62,6 +62,13 @@ void diag(vector<vector<int>> matrix) {
 	cout << "Secondary diagonal sum: " << count << endl;
 }
 
+void rowSwap(vector<vector<int>> matrix, int row1, int row2) {
+	vector<int> temp = matrix[row1];
+	matrix[row1] = matrix[row2];
+	matrix[row2] = temp;
+	printMatrix(matrix);
+}
+
 int main() {
 	string filename;
 	string fileline;
@@ -125,6 +132,19 @@ int main() {
 			} else {
 				cout << "Diagonal sums for Matrix B:" << endl;
 				diag(matrix2);
+			}
+		} else if(action == 4) {
+			char whichMatrix;
+			int row1, row2;
+			cout << "(A) or (B): ";
+			cin >> whichMatrix;
+			cout << "Input rows: ";
+			cin >> row1 >> row2;
+			cout << "Rows " << row1 << " and " << row2 << " swapped" << endl;
+			if(whichMatrix == 'A') {
+				rowSwap(matrix1, row1, row2);
+			} else {
+				rowSwap(matrix2, row1, row2);
 			}
 		}
 		else {
