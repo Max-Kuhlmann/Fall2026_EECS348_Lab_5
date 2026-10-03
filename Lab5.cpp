@@ -32,13 +32,34 @@ vector<vector<int>> multiply(vector<vector<int>> matrix1, vector<vector<int>> ma
 		for(int j = 0; j < matrix1[i].size(); j++) {
 			int tempVal = 0;
 			for(int k = 0; k < matrix1[i].size(); k++) {
-				tempVal += matrix1[i][j] * matrix2[j][i];
+				tempVal += matrix1[i][k] * matrix2[k][j];
 			}
 			tempRow.push_back(tempVal);
 		}
 		finalMatrix.push_back(tempRow);
 	}
 	return finalMatrix;
+}
+
+void diag(vector<vector<int>> matrix) {
+	int count = 0;
+	for(int i = 0; i < matrix.size(); i++) {
+		for(int j = 0; j < matrix.size(); j++) {
+			if(i == j) {
+				count += matrix[i][j];
+			}
+		}
+	}
+	cout << "Main diagonal sum: " << count << endl;
+	count = 0;
+	for(int i = 0; i < matrix.size(); i++) {
+		for(int j = 0; j < matrix.size(); j++) {
+			if(j == (matrix.size() - (i + 1))) {
+				count += matrix[i][j];
+			}
+		}
+	}
+	cout << "Secondary diagonal sum: " << count << endl;
 }
 
 int main() {
@@ -74,13 +95,7 @@ int main() {
 	printMatrix(matrix1);
 	cout << "Matrix B:" << endl;
 	printMatrix(matrix2);
-	for(auto& row : matrix2) {
-		for(int val : row) {
-			cout << val << "\t";
-		}
-		cout << endl;
-	}
-	
+
 	bool looping = true;
 	int action;
 	while(looping) {
@@ -100,6 +115,17 @@ int main() {
 		} else if(action == 2) {
 			cout << "A * B:" << endl;
 			printMatrix(multiply(matrix1, matrix2));
+		} else if(action == 3) {
+			char whichMatrix;
+			cout << "(A) or (B): ";
+			cin >> whichMatrix;
+			if(whichMatrix == 'A') {
+				cout << "Diagonal sums for Matrix A:" << endl;
+				diag(matrix1);
+			} else {
+				cout << "Diagonal sums for Matrix B:" << endl;
+				diag(matrix2);
+			}
 		}
 		else {
 			looping = false;
