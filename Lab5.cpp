@@ -13,6 +13,13 @@ void printMatrix(vector<vector<int>> matrix) {
         }
 }
 
+bool isValid(int size, int index1, int index2) {
+	if(index1 > 0 and index2 > 0 and index1 < size and index2 < size) {
+		return true;
+	}
+	return false;
+}
+
 vector<vector<int>> add(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
 	vector<vector<int>> finalMatrix;
 	for(int i = 0; i < matrix1.size(); i++) {
@@ -154,11 +161,15 @@ int main() {
 			cin >> whichMatrix;
 			cout << "Input rows: ";
 			cin >> row1 >> row2;
-			cout << "Rows " << row1 << " and " << row2 << " swapped:" << endl;
-			if(whichMatrix == 'A') {
-				rowSwap(matrix1, row1, row2);
+			if(isValid(size, row1, row2)) {
+				cout << "Rows " << row1 << " and " << row2 << " swapped:" << endl;
+				if(whichMatrix == 'A') {
+					rowSwap(matrix1, row1, row2);
+				} else {
+					rowSwap(matrix2, row1, row2);
+				}
 			} else {
-				rowSwap(matrix2, row1, row2);
+				cout << "Invalid indexes" << endl;
 			}
 		} else if(action == 5) {
 			char whichMatrix;
@@ -167,12 +178,16 @@ int main() {
 			cin >> whichMatrix;
 			cout << "Input rows: ";
 			cin >> col1 >> col2;
-			cout << "Columns " << col1 << " and " << col2 << " swapped:" << endl;
-			if(whichMatrix == 'A') {
-				colSwap(matrix1, col1, col2);
+			if(isValid(size, col1, col2)) {
+				cout << "Columns " << col1 << " and " << col2 << " swapped:" << endl;
+				if(whichMatrix == 'A') {
+					colSwap(matrix1, col1, col2);
+				} else {
+					colSwap(matrix2, col1, col2);
+				}
 			} else {
-				colSwap(matrix2, col1, col2);
-			}
+				cout << "Invalid indexes" << endl;
+				}
 		} else if(action == 6) {
 			char whichMatrix;
 			int newVal, row, col;
@@ -182,13 +197,17 @@ int main() {
 			cin >> newVal;
 			cout << "Input row and column: ";
 			cin >> row >> col;
-			cout << "Updated matrix: " << endl;
-			if(whichMatrix == 'A') {
-				matrix1 = updateMatrix(matrix1, newVal, row, col);
-				printMatrix(matrix1);
+			if(isValid(size, row, col)) {
+				cout << "Updated matrix: " << endl;
+				if(whichMatrix == 'A') {
+					matrix1 = updateMatrix(matrix1, newVal, row, col);
+					printMatrix(matrix1);
+				} else {
+					matrix2 = updateMatrix(matrix2, newVal, row, col);
+					printMatrix(matrix2);
+				}
 			} else {
-				matrix2 = updateMatrix(matrix2, newVal, row, col);
-				printMatrix(matrix2);
+				cout << "Invalid indexes" << endl;
 			}
 		} else {
 			looping = false;
