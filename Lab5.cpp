@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <tuple>
 using namespace std;
 
 void printMatrix(vector<vector<int>> matrix) {
@@ -44,10 +45,9 @@ tuple<vector<vector<int>>, vector<vector<int>>, int> getMatrices(){
 	myFile.close();
 	return {matrix1, matrix2, size};
 }
-	
 
 bool isValid(int size, int index1, int index2) {
-	if(index1 > 0 and index2 > 0 and index1 < size and index2 < size) {
+	if(index1 >= 0 && index2 >= 0 && index1 < size && index2 < size) {
 		return true;
 	}
 	return false;
@@ -102,20 +102,22 @@ void diag(vector<vector<int>> matrix) {
 	cout << "Secondary diagonal sum: " << count << endl;
 }
 
-void rowSwap(vector<vector<int>> matrix, int row1, int row2) {
+vector<vector<int>> rowSwap(vector<vector<int>> matrix, int row1, int row2) {
 	vector<int> temp = matrix[row1];
 	matrix[row1] = matrix[row2];
 	matrix[row2] = temp;
 	printMatrix(matrix);
+	return matrix;
 }
 
-void colSwap(vector<vector<int>> matrix, int col1, int col2) {
+vector<vector<int>> colSwap(vector<vector<int>> matrix, int col1, int col2) {
 	for(int i = 0; i < matrix.size(); i++) {
 		int temp = matrix[i][col1];
 		matrix[i][col1] = matrix [i][col2];
 		matrix[i][col2] = temp;
 	}
 	printMatrix(matrix);
+	return matrix;
 }
 
 vector<vector<int>> updateMatrix(vector<vector<int>> matrix, int newVal, int row, int col) {
@@ -170,9 +172,9 @@ int main() {
 			if(isValid(size, row1, row2)) {
 				cout << "Rows " << row1 << " and " << row2 << " swapped:" << endl;
 				if(whichMatrix == 'A') {
-					rowSwap(matrix1, row1, row2);
+					matrix1 = rowSwap(matrix1, row1, row2);
 				} else {
-					rowSwap(matrix2, row1, row2);
+					matrix2 = rowSwap(matrix2, row1, row2);
 				}
 			} else {
 				cout << "Invalid indexes" << endl;
@@ -187,9 +189,9 @@ int main() {
 			if(isValid(size, col1, col2)) {
 				cout << "Columns " << col1 << " and " << col2 << " swapped:" << endl;
 				if(whichMatrix == 'A') {
-					colSwap(matrix1, col1, col2);
+					matrix1 = colSwap(matrix1, col1, col2);
 				} else {
-					colSwap(matrix2, col1, col2);
+					matrix2 = colSwap(matrix2, col1, col2);
 				}
 			} else {
 				cout << "Invalid indexes" << endl;
